@@ -55,7 +55,7 @@
     };
 };
 
-&&pro_micro_i2c {
+&pro_micro_i2c {
     status = "okay";
 
     oled0: ssd1306@3c {
