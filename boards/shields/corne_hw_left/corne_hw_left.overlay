@@ -36,45 +36,9 @@
                 <&gpio0 9  (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>;  /* Col 5 = P0.09 */
 };
 
-&pinctrl {
-    /* OLED I2C Pins (SDA: P0.17, SCL/SCK: P0.20) */
-    i2c0_default: i2c0_default {
-        group1 {
-            psels = <NRF_PSEL(TWIM_SDA, 0, 17)>,
-                    <NRF_PSEL(TWIM_SCL, 0, 20)>;
-            bias-pull-up;
-        };
-    };
-
-    i2c0_sleep: i2c0_sleep {
-        group1 {
-            psels = <NRF_PSEL(TWIM_SDA, 0, 17)>,
-                    <NRF_PSEL(TWIM_SCL, 0, 20)>;
-            low-power-enable;
-        };
-    };
-
-    /* WS2812 Underglow SPI Pin (MOSI: P0.06) */
-    spi3_default: spi3_default {
-        group1 {
-            psels = <NRF_PSEL(SPIM_MOSI, 0, 6)>;
-        };
-    };
-
-    spi3_sleep: spi3_sleep {
-        group1 {
-            psels = <NRF_PSEL(SPIM_MOSI, 0, 6)>;
-            low-power-enable;
-        };
-    };
-};
-
-/* OLED Display */
+/* OLED Display: Use the default board-routed pro_micro_i2c without breaking pinctrl */
 &pro_micro_i2c {
     status = "okay";
-    pinctrl-0 = <&i2c0_default>;
-    pinctrl-1 = <&i2c0_sleep>;
-    pinctrl-names = "default", "sleep";
 
     oled0: ssd1306@3c {
         compatible = "solomon,ssd1306fb";
@@ -89,10 +53,27 @@
         com-invdir;
         com-sequential;
         prechargep = <0x22>;
+        inversion-on;
     };
 };
 
-/* RGB Underglow */
+/* Pinctrl for WS2812 RGB underglow */
+&pinctrl {
+    spi3_default: spi3_default {
+        group1 {
+            psels = <NRF_PSEL(SPIM_MOSI, 0, 6)>;
+        };
+    };
+
+    spi3_sleep: spi3_sleep {
+        group1 {
+            psels = <NRF_PSEL(SPIM_MOSI, 0, 6)>;
+            low-power-enable;
+        };
+    };
+};
+
+/* WS2812 SPI Configuration */
 &spi3 {
     compatible = "nordic,nrf-spim";
     status = "okay";
