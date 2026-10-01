@@ -55,18 +55,15 @@
     };
 };
 
-&pro_micro_i2c {
+&&pro_micro_i2c {
     status = "okay";
-    pinctrl-0 = <&i2c0_default>;
-    pinctrl-1 = <&i2c0_sleep>;
-    pinctrl-names = "default", "sleep";
 
-oled0: sh1106@3c {
-        compatible = "sinowealth,sh1106";
+    oled0: ssd1306@3c {
+        compatible = "solomon,ssd1306fb";
         reg = <0x3c>;
         width = <128>;
         height = <32>;
-        segment-offset = <2>;
+        segment-offset = <0>;
         page-offset = <0>;
         display-offset = <0>;
         multiplex-ratio = <31>;
