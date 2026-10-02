@@ -31,7 +31,6 @@
 };
 
 &pinctrl {
-    /* Using P0.22 for SDA and P0.24 for SCL */
     i2c1_default: i2c1_default {
         group1 {
             psels = <NRF_PSEL(TWIM_SDA, 0, 22)>,
@@ -81,7 +80,6 @@
         multiplex-ratio = <31>;
         segment-remap;
         com-invdir;
-        com-sequential;
         prechargep = <0x22>;
     };
 };
