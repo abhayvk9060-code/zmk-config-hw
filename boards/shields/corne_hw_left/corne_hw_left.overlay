@@ -12,15 +12,11 @@
         zephyr,display = &oled;
         zmk,underglow = &led_strip;
     };
-
-    ext-power {
-        compatible = "zmk,ext-power-generic";
-        control-gpios = <&gpio0 13 GPIO_ACTIVE_HIGH>;
-        init-delay-ms = <50>;
-    };
 };
 
 &kscan0 {
+    diode-direction = "row2col";
+
     row-gpios = <&gpio1 0  GPIO_ACTIVE_HIGH>,  /* D6 = P1.00 */
                 <&gpio0 11 GPIO_ACTIVE_HIGH>,  /* D7 = P0.11 */
                 <&gpio1 4  GPIO_ACTIVE_HIGH>,  /* D8 = P1.04 */
